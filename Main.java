@@ -2,14 +2,14 @@
   
 
 //COLOURS : 
-int[] rgbA = {255, 128, 179}; //Agent colour
-int[] rgbB = {0, 179, 143}; //Background colour
-int[] rgbP = {51, 0, 128};  //Colour pheromone will fade to
+color rgbA = color(255, 128, 179); //Agent colour
+color rgbB = color(0, 179, 143); //Background colour
+color rgbP = color(51, 0, 128);  //Colour pheromone will fade to
 
 //AGENTS : 
 int numAgents = 25;
 float speed = 3;
-int size = 3;
+int size = 5;
 int max = 1000;
 
 //NOISE : 
@@ -17,11 +17,11 @@ String noise = "perlin";
 float noiseScale = 0.004;
 
 //PHEROMONES
-float pheroDecay = 0.01;
-float pheroThreshold = 0.05;
+float pheroDecay = 0.0175;
+float pheroThreshold = 0;
 
 //SPAWN
-String orientation = "DOWN";
+String orientation = "UP";
 //END OF CUSTOMIZABLE
 
 ArrayList<Agent> agents = new ArrayList<Agent>();
@@ -53,9 +53,8 @@ void setup()  {
 
 }
 
-
 void draw(){
-  background(rgbB[0],rgbB[1],rgbB[2]); 
+  background(rgbB); 
   //println(agents.size());
   spawn();
   for(int i=0;i<agents.size(); i++){
@@ -81,7 +80,13 @@ void draw(){
       pheromones.remove(j);
     }
   }
-  saveFrame();
+  if(frameCount<1200){
+    saveFrame("frame-" + nf(frameCount, 4) + ".png");
+    println(frameCount);
+  } else {
+    println("Done");
+    exit();
+  }
 }
 void mouseClicked(){
   if(mouseButton != RIGHT){//Left click : increase shift clockwise
